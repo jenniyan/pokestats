@@ -67,8 +67,31 @@ def plot_poke_data(pokemon_list: list) -> None:
             name=pokemon['name'],
             fillcolor=fill_rgba,
             line=dict(color=line_rgba, width=3),
+            hovertemplate=(
+                f"<b>{pokemon['name']} ({poke_type.capitalize()})</b><br>"
+                "%{theta}: %{r}<br>"
+                "<extra></extra>"
+            )
         ))
 
-        fig.update_layout(title="pokemon stats comparison and visualizer", showlegend=True, template='plotly_white', polar=dict(radialaxis=dict(visible=True, range=[0,150])))
+        fig.update_layout(
+            font=dict(
+                family="Source Code Pro, Arial, sans-serif",
+                size=14,
+                color="black"
+            )
+        )
+
+        fig.update_layout(
+            title="pokemon stats comparison and visualizer",
+            showlegend=True,
+            template='plotly_white',
+            polar=dict(
+                radialaxis=dict(
+                    visible=True,
+                    range=[0,150]
+                )
+            )
+        )
 
     fig.show()

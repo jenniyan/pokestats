@@ -50,7 +50,9 @@ def main():
 
     # step 3: fetch pokemon data
     pokemon_data = []
+    graph_file_name = 'pokemon-graph'
     for pokemon in pokemon_names:
+        graph_file_name += f'-{pokemon}'
         data = fetch_pokemon_data(pokemon)
         pokemon_data.append(data)
 
@@ -61,7 +63,8 @@ def main():
         print(f"saved Pokémon data to '{filename}'")
 
     # step 5: visualize data
-    plot_poke_data(pokemon_data)
+    graph_file_name += '.html'
+    plot_poke_data(pokemon_data, graph_file_name)
 
 
 if __name__ == "__main__":

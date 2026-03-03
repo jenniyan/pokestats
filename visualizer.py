@@ -90,7 +90,7 @@ def _type_to_rgba(poke_type: str, alpha: float = 0.5) -> str:
     return f"rgba({rgb[0]},{rgb[1]},{rgb[2]},{alpha})"
 
 
-def plot_poke_data(pokemon_list: list) -> None:
+def plot_poke_data(pokemon_list: list, file_name: str) -> None:
     """
     Generate a radar chart visualization of Pokémon stats.
 
@@ -100,6 +100,8 @@ def plot_poke_data(pokemon_list: list) -> None:
         - 'name': Pokémon name
         - 'types': list of Pokémon types
         - 'stats': dictionary mapping stat names to values
+    - file_name : str
+        Specified file to save graph to
 
     Notes:
     - Only Pokémon with valid 'stats' are plotted.
@@ -155,5 +157,7 @@ def plot_poke_data(pokemon_list: list) -> None:
                 }
             }
         )
+
+    fig.write_html(file_name, include_mathjax='cdn')
 
     fig.show()

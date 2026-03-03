@@ -1,24 +1,24 @@
 import plotly.graph_objects as go
 
 TYPE_COLORS = {
-    "normal": (211, 211, 211), # light gray
-    "fire": (242, 51, 51), # red
-    "water": (51, 51, 242), # blue
-    "electric": (255, 250, 94), # yellow
-    "grass": (126, 245, 103), # green
-    "ice": (143, 226, 242), # light blue/turquoise
-    "fighting": (232, 166, 74), # orange
-    "poison": (165, 111, 227), # purple
-    "ground": (196, 165, 122), # taupe
-    "flying": (161, 208, 255), # light blue
-    "psychic": (207, 141, 242), # magenta
-    "bug": (91, 122, 102), # olive
-    "rock": (108, 118, 128), # dark gray
-    "ghost": (103, 69, 138), # darker purple
-    "dragon": (75, 66, 133), # indigo
-    "dark": (41, 39, 51), # black
-    "steel": (94, 98, 125), # silver/grey
-    "fairy": (235, 190, 218), # pink
+    "normal": (211, 211, 211),  # light gray
+    "fire": (242, 51, 51),  # red
+    "water": (51, 51, 242),  # blue
+    "electric": (255, 250, 94),  # yellow
+    "grass": (126, 245, 103),  # green
+    "ice": (143, 226, 242),  # light blue/turquoise
+    "fighting": (232, 166, 74),  # orange
+    "poison": (165, 111, 227),  # purple
+    "ground": (196, 165, 122),  # taupe
+    "flying": (161, 208, 255),  # light blue
+    "psychic": (207, 141, 242),  # magenta
+    "bug": (91, 122, 102),  # olive
+    "rock": (108, 118, 128),  # dark gray
+    "ghost": (103, 69, 138),  # darker purple
+    "dragon": (75, 66, 133),  # indigo
+    "dark": (41, 39, 51),  # black
+    "steel": (94, 98, 125),  # silver/grey
+    "fairy": (235, 190, 218),  # pink
 }
 
 
@@ -28,7 +28,16 @@ def _filter_valid_pokemons(p_list: list) -> list:
         print("No Pokémon in list.")
         return []
 
-    valid_pokemons = [p for p in p_list if p and "stats" in p and isinstance(p["stats"], dict)]
+    valid_pokemons = []
+    for p in p_list:
+        if not p:
+            continue
+        if "stats" not in p:
+            continue
+        if not isinstance(p["stats"], dict):
+            continue
+        valid_pokemons.append(p)
+
     if not valid_pokemons:
         print("No Pokémon with valid stats found.")
         return []
@@ -54,10 +63,10 @@ def plot_poke_data(pokemon_list: list) -> None:
     for pokemon in valid_pokemons:
         values = list(pokemon['stats'].values())
         values += values[:1]
-        categories_loop = categories + categories [:1]
+        categories_loop = categories + categories[:1]
 
         poke_type = pokemon["types"][0] if pokemon.get("types") else "normal"
-        fill_rgba = _type_to_rgba(poke_type, alpha=0.4)  # semi-transparent fill
+        fill_rgba = _type_to_rgba(poke_type, alpha=0.4)
         line_rgba = _type_to_rgba(poke_type, alpha=1.0)
 
         fig.add_trace(go.Scatterpolar(
@@ -89,7 +98,7 @@ def plot_poke_data(pokemon_list: list) -> None:
             polar=dict(
                 radialaxis=dict(
                     visible=True,
-                    range=[0,150]
+                    range=[0, 150]
                 )
             )
         )

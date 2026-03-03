@@ -21,7 +21,7 @@ def main():
     2. Ask if the user wants to save the fetched data.
     3. Fetch Pokémon data using the PokeAPI.
     4. Save data to a local JSON file if requested.
-    5. Generate a radar chart visualization of the Pokémon stats.
+    5. Generate and save a radar chart visualization of the Pokémon stats.
 
     Notes:
     - If a Pokémon name is invalid, fetch_pokemon_data will return None.

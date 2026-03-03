@@ -1,3 +1,17 @@
+"""
+visualizer.py
+
+This module provides functions to visualize Pokémon stats using Plotly.
+
+This module includes:
+- TYPE_COLORS: a mapping of Pokémon types to RGB colors.
+- _filter_valid_pokemons: helper to filter invalid Pokémon data.
+- _type_to_rgba: helper to convert a type's RGB color to RGBA for Plotly.
+- plot_poke_data: generates a radar chart of Pokémon stats.
+
+All functions are designed to work with data retrieved from the PokeAPI.
+"""
+
 import plotly.graph_objects as go
 
 TYPE_COLORS = {
@@ -23,7 +37,19 @@ TYPE_COLORS = {
 
 
 def _filter_valid_pokemons(p_list: list) -> list:
-    """Return a list of valid Pokémon dictionaries."""
+    """
+    Filter a list of Pokémon dictionaries, keeping only those with valid stats.
+
+    Parameters:
+    - p_list : list
+        List of Pokémon dictionaries to filter. Each dictionary should
+        contain a 'stats' key with a dictionary of stat names to values.
+
+    Returns
+    - list
+        List of valid Pokémon dictionaries. If no valid Pokémon are found,
+        returns an empty list and prints a message.
+    """
     if not p_list:
         print("No Pokémon in list.")
         return []
@@ -46,12 +72,39 @@ def _filter_valid_pokemons(p_list: list) -> list:
 
 
 def _type_to_rgba(poke_type: str, alpha: float = 0.5) -> str:
-    """Convert a named color to an RGBA string for Plotly."""
+    """
+    Convert a Pokémon type to an RGBA color string for Plotly.
+
+    Parameters:
+    - poke_type : str
+        The Pokémon type name (e.g., 'fire', 'water').
+    - alpha : float, optional
+        Opacity level between 0 (transparent) and 1 (opaque), by default 0.5.
+
+    Returns:
+    - str
+        A string representing the RGBA color for Plotly
+        (e.g. 'rgba(242,51,51,0.5)')
+    """
     rgb = TYPE_COLORS.get(poke_type.lower(), (128, 128, 128))  # default gray
     return f"rgba({rgb[0]},{rgb[1]},{rgb[2]},{alpha})"
 
 
 def plot_poke_data(pokemon_list: list) -> None:
+    """
+    Generate a radar chart visualization of Pokémon stats.
+
+    Parameters:
+    - pokemon_list : list
+        List of Pokémon dictionaries, each containing:
+        - 'name': Pokémon name
+        - 'types': list of Pokémon types
+        - 'stats': dictionary mapping stat names to values
+
+    Notes:
+    - Only Pokémon with valid 'stats' are plotted.
+    - The chart uses Plotly's Scatterpolar for radar chart visualization.
+    """
     fig = go.Figure()
 
     valid_pokemons = _filter_valid_pokemons(pokemon_list)
@@ -75,7 +128,7 @@ def plot_poke_data(pokemon_list: list) -> None:
             fill='toself',
             name=pokemon['name'],
             fillcolor=fill_rgba,
-            line=dict(color=line_rgba, width=3),
+            line={"color": line_rgba, "width": 3},
             hovertemplate=(
                 f"<b>{pokemon['name']} ({poke_type.capitalize()})</b><br>"
                 "%{theta}: %{r}<br>"
@@ -84,23 +137,23 @@ def plot_poke_data(pokemon_list: list) -> None:
         ))
 
         fig.update_layout(
-            font=dict(
-                family="Source Code Pro, Arial, sans-serif",
-                size=14,
-                color="black"
-            )
+            font={
+                "family": "Source Code Pro, Arial, sans-serif",
+                "size": 14,
+                "color": "black"
+            }
         )
 
         fig.update_layout(
             title="pokemon stats comparison and visualizer",
             showlegend=True,
             template='plotly_white',
-            polar=dict(
-                radialaxis=dict(
-                    visible=True,
-                    range=[0, 150]
-                )
-            )
+            polar={
+                "radialaxis": {
+                    "visible": True,
+                    "range": [0, 150]
+                }
+            }
         )
 
     fig.show()

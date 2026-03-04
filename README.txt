@@ -9,6 +9,8 @@ The radar chart compares Pokémon base stats (HP, attack, defense, etc.) and col
 each Pokémon according to its primary type. This visualization allows users to quickly
 compare strengths and weaknesses between different Pokémon.
 
+* Note that only three pokemon are accepted max at one time to avoid overcrowding on the graph.
+
 This product would not have been possible without PokeAPI. Special thanks to the creators
 https://pokeapi.co/
 

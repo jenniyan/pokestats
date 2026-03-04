@@ -43,7 +43,7 @@ def main():
             pokemon_names.append(user_input)
 
     # step 2: ask if user wants to save fetched data
-    save_choice = input("would you also like to save this pokemon data"
+    save_choice = input("would you also like to save this pokemon data "
                         "to a file on your computer? ('y'/'n'): ")
     if save_choice == 'y':
         save = True
